@@ -6,8 +6,8 @@ import {
   ValidationPipe,
   UseGuards,
   Get,
-  Req,
-} from '@nestjs/common';
+  Req, Res
+} from "@nestjs/common";
 import { AuthService } from './auth.service';
 import { CreateUserDto, LoginUserDto, User } from '../users/user.dto';
 import { AuthGuard } from '@nestjs/passport';
@@ -26,6 +26,12 @@ export class AuthController {
   async login(@Body() loginUserDto: LoginUserDto) {
     return await this.authService.login(loginUserDto);
   }
+
+  @Post('/logout')
+  async logout(@Req() req, @Res() res) {
+    return res.status(200).send('Logged out successfully');
+  }
+
   @UseGuards(
     AuthGuard(),
   ) /** Decorator AuthGuard dùng để tự động check tới jwt.strategy */
