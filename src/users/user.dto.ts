@@ -6,12 +6,12 @@ export class User extends base {
   @Expose()
   @IsNotEmpty()
   @IsString()
-  @Length(3,30)
+  @Length(3, 30)
   username: string;
-  
+
   @Expose()
   @IsNotEmpty()
-  @Length(8,30)
+  @Length(8, 30)
   @IsString()
   @Matches(
     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
@@ -23,6 +23,6 @@ export class User extends base {
   password: string;
 
   @Expose()
-  @Transform(({obj}) => obj.username + ' ' + obj.password)
+  @Transform(({ obj }) => obj.username + ' ' + obj.password)
   up: string;
 }

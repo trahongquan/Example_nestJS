@@ -1,13 +1,18 @@
-import { Body, Controller, Get, Param, ParseIntPipe, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, ParseIntPipe, Post, UsePipes, ValidationPipe } from "@nestjs/common";
 import { User } from './user.dto';
 import { UserService } from './user.service';
+import { UserDocument } from './user.model';
 
+@UsePipes(new ValidationPipe()) // Level router
 @Controller('users')
 export class UserController {
   constructor(private userService: UserService) {}
-//   constructor(private moduleRef: ModuleRef) {}
-//   userService = this.moduleRef.get('userEditName');
-  //   @UsePipes(new ValidationPipe()) // Level router
+/**
+ * //   constructor(private moduleRef: ModuleRef) {}
+ * //   userService = this.moduleRef.get('userEditName');
+ *   //   @UsePipes(new ValidationPipe()) // Level router
+ * */
+  /**
   @Post()
   createUser(@Body() user: User): User {
     // const userReal = plainToClass(User, user, {
@@ -19,21 +24,20 @@ export class UserController {
     // return this.userService.createUser(user);
     return this.userService.createUser(user);
   }
+  */
+
+  @Post()
+  async createUser(@Body() userDto: User): Promise<UserDocument> {
+    return this.userService.createUser(userDto);
+  }
 
   @Get()
-  getAllUsers() {
-    return [
-      {
-        name: 'xxx',
-        age: 24,
-      },
-    ];
+  async getAllUsers(): Promise<UserDocument[]> {
+    return this.userService.getAllUsers();
   }
 
   @Get(':id')
-  getUserById(@Param('id', ParseIntPipe) id: number) {
-    //ParseIntPipe sử dụng Pipe để valuedation: kiểm tra trước khi nhận vào
-    console.log(id);
-    return 'test';
+  async getUserById(@Param('id') id: number): Promise<UserDocument> {
+    return this.userService.getUserById(id);
   }
 }
