@@ -7,6 +7,12 @@ export class User extends base {
   @IsNotEmpty()
   @IsString()
   @Length(3, 30)
+  email: string;
+
+  @Expose()
+  @IsNotEmpty()
+  @IsString()
+  @Length(3, 30)
   username: string;
 
   @Expose()
@@ -25,4 +31,53 @@ export class User extends base {
   @Expose()
   @Transform(({ obj }) => obj.username + ' ' + obj.password)
   up: string;
+}
+
+export class CreateUserDto {
+  @Expose()
+  @IsNotEmpty()
+  @IsString()
+  @Length(3, 30)
+  email: string;
+
+  @Expose()
+  @IsNotEmpty()
+  @IsString()
+  @Length(3, 30)
+  username: string;
+
+  @Expose()
+  @Length(8, 30)
+  @IsString()
+  @Matches(
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+    {
+      message:
+        'Password must be at least 8 characters long and contain at least one uppercase, one lowercase, one number and one special character',
+    },
+  )
+  @IsNotEmpty()
+  password: string;
+}
+
+export class LoginUserDto {
+  @Expose()
+  @IsNotEmpty()
+  @IsString()
+  @Length(3, 30)
+  email: string;
+
+  @Expose()
+  @IsNotEmpty()
+  @Length(8, 30)
+  @IsString()
+  @Matches(
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+    {
+      message:
+        'Password must be at least 8 characters long and contain at least one uppercase, one lowercase, one number and one special character',
+    },
+  )
+  @IsNotEmpty()
+  password: string;
 }

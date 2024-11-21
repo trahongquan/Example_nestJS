@@ -1,17 +1,28 @@
-import { Body, Controller, Get, Param, ParseIntPipe, Post, UsePipes, ValidationPipe } from "@nestjs/common";
-import { User } from './user.dto';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Post,
+  Req,
+  UseGuards,
+  UsePipes,
+  ValidationPipe,
+} from '@nestjs/common';
+import { CreateUserDto, User } from './user.dto';
 import { UserService } from './user.service';
 import { UserDocument } from './user.model';
+import { AuthGuard } from '@nestjs/passport';
 
 @UsePipes(new ValidationPipe()) // Level router
 @Controller('users')
 export class UserController {
   constructor(private userService: UserService) {}
-/**
- * //   constructor(private moduleRef: ModuleRef) {}
- * //   userService = this.moduleRef.get('userEditName');
- *   //   @UsePipes(new ValidationPipe()) // Level router
- * */
+  /**
+   * //   constructor(private moduleRef: ModuleRef) {}
+   * //   userService = this.moduleRef.get('userEditName');
+   *   //   @UsePipes(new ValidationPipe()) // Level router
+   * */
   /**
   @Post()
   createUser(@Body() user: User): User {
@@ -27,7 +38,7 @@ export class UserController {
   */
 
   @Post()
-  async createUser(@Body() userDto: User): Promise<UserDocument> {
+  async createUser(@Body() userDto: CreateUserDto): Promise<UserDocument> {
     return this.userService.createUser(userDto);
   }
 
@@ -39,5 +50,14 @@ export class UserController {
   @Get(':id')
   async getUserById(@Param('id') id: number): Promise<UserDocument> {
     return this.userService.getUserById(id);
+  }
+
+  @UseGuards(
+    AuthGuard(),
+  ) /** Decorator AuthGuard dùng để tự động check tới jwt.strategy */
+  @Get('profile')
+  async getProfile(@Req() req: any) {
+    console.log(req.user);
+    return req.user;
   }
 }
