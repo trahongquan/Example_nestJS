@@ -41,6 +41,9 @@ export class CreateUserDto {
   email: string;
 
   @Expose()
+  phone: string;
+
+  @Expose()
   @IsNotEmpty()
   @IsString()
   @Length(3, 30)

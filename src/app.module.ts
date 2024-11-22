@@ -8,7 +8,6 @@ import { JwtModule } from '@nestjs/jwt';
   //Decorator -- giống Anotation bên java
   imports: [
     UserModule,
-    // AuthModule,
     JwtModule,
     MongooseModule.forRoot('mongodb://localhost:27017/test'),
     ConfigModule.forRoot(),

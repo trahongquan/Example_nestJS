@@ -33,6 +33,7 @@ const UserSchema = new Schema(
     name: String,
     email: String,
     password: String,
+    sdt: String
   },
   {
     collection: 'users',
@@ -43,4 +44,5 @@ export interface UserDocument extends Document {
   name: string;
   email: string;
   password: string;
+  sdt: string
 }

@@ -31,7 +31,6 @@ import { JwtStrategy } from '../jwt/jwt.strategy';
       }),
       inject: [ConfigService],
     }),
-    // AuthModule,
   ],
   controllers: [UserController, AuthController], // injector vào UserController
   providers: [UserService, UserRepository, AuthService, JwtStrategy],

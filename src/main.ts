@@ -3,7 +3,6 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { CorsOptions } from '@nestjs/common/interfaces/external/cors-options.interface';
 
-
 const logger = new Logger('Database Connection');
 
 async function bootstrap(): Promise<void> {
@@ -18,7 +17,7 @@ async function bootstrap(): Promise<void> {
       preflightContinue: false,
       optionsSuccessStatus: 204,
       credentials: true,
-      allowedHeaders: ['Authorization', 'Content-Type'], // Thêm 'Content-Type' vào danh sách các tiêu đề được phép
+      allowedHeaders: ['Authorization', 'Content-Type'],
     };
 
     app.enableCors(corsOptions);
@@ -26,7 +25,7 @@ async function bootstrap(): Promise<void> {
     const PORT = 3333;
     await app.listen(PORT, () => {
       logger.log(`App started on port ${PORT}`);
-      logger.log('Connected to MongoDB database successfully');
+      // logger.log('Connected to MongoDB database successfully');
     });
   } catch (error) {
     logger.error(`Error starting the app: ${error.message}`);
